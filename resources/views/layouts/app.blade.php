@@ -55,9 +55,20 @@
                         </h2>
                     </div>
 
-                    <div class="text-sm text-gray-500">
-                        Admin Internal
-                    </div>
+                    <div class="flex items-center gap-4">
+    <span class="text-sm font-medium text-gray-700">
+        Admin Internal
+    </span>
+
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button
+            type="submit"
+            class="px-3 py-2 text-sm text-red-600 border border-red-100 rounded-lg hover:bg-red-50 transition">
+            Logout
+        </button>
+    </form>
+</div>
 
                 </div>
             </header>
