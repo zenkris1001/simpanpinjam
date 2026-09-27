@@ -2,21 +2,6 @@
 
 Aplikasi web internal untuk mencatat dan mengelola pengajuan pembiayaan nasabah.
 
-## Fitur
-
-* Dashboard statistik pengajuan
-* Tambah pengajuan nasabah
-* Daftar pengajuan
-* Pencarian nama nasabah
-* Filter berdasarkan status
-* Detail pengajuan
-* Perhitungan cicilan per bulan
-* Persetujuan pengajuan
-* Penolakan pengajuan
-* Status Lunas
-* Pagination daftar pengajuan
-* Validasi pengajuan
-
 ## Teknologi
 
 * Laravel 12
@@ -25,20 +10,11 @@ Aplikasi web internal untuk mencatat dan mengelola pengajuan pembiayaan nasabah.
 * Tailwind CSS
 * Vite
 
-## Persyaratan
-
-Pastikan komputer sudah terinstall:
-
-* XAMPP
-* PHP 8.2 atau lebih baru
-* Composer
-* Node.js dan NPM
-
-## Cara Menjalankan di Localhost
+## Cara Menjalankan Aplikasi
 
 ### 1. Extract Project
 
-Extract file ZIP ke folder:
+Extract file ZIP ke:
 
 ```text
 C:\xampp\htdocs\
@@ -58,7 +34,7 @@ Masuk ke folder project:
 cd C:\xampp\htdocs\pembiayaan-app
 ```
 
-### 3. Install Dependency Laravel
+### 3. Install Laravel
 
 Jalankan:
 
@@ -66,7 +42,7 @@ Jalankan:
 composer install
 ```
 
-### 4. Install Dependency Frontend
+### 4. Install Vite
 
 Jalankan:
 
@@ -74,17 +50,15 @@ Jalankan:
 npm install
 ```
 
-### 5. Buat File Environment
+### 5. Atur File `.env`
 
-Copy file `.env.example` menjadi `.env`.
-
-Windows:
+Copy `.env.example` menjadi `.env`:
 
 ```bash
 copy .env.example .env
 ```
 
-Kemudian buka file `.env` dan sesuaikan database:
+Kemudian buka file `.env` dan isi database:
 
 ```env
 DB_CONNECTION=mysql
@@ -97,24 +71,24 @@ DB_PASSWORD=
 
 ### 6. Buat Database
 
-Buka XAMPP dan aktifkan:
+Buka XAMPP, lalu nyalakan:
 
 * Apache
 * MySQL
 
-Kemudian buka phpMyAdmin:
+Kemudian buka:
 
 ```text
 http://localhost/phpmyadmin
 ```
 
-Buat database baru dengan nama:
+Buat database dengan nama:
 
 ```text
 db_pembiayaan
 ```
 
-### 7. Generate Application Key
+### 7. Generate Key
 
 Jalankan:
 
@@ -122,7 +96,7 @@ Jalankan:
 php artisan key:generate
 ```
 
-### 8. Jalankan Migration
+### 8. Buat Tabel Database
 
 Jalankan:
 
@@ -130,41 +104,35 @@ Jalankan:
 php artisan migrate
 ```
 
-Perintah ini akan membuat tabel database yang dibutuhkan aplikasi.
+Perintah ini akan membuat tabel yang dibutuhkan aplikasi.
 
 ### 9. Jalankan Laravel
 
-Buka terminal pertama:
+Jalankan:
 
 ```bash
 php artisan serve
 ```
 
-Biasanya aplikasi dapat diakses melalui:
+Kemudian buka:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-atau:
-
-```text
-http://localhost:8000
-```
-
 ### 10. Jalankan Vite
 
-Buka terminal kedua pada folder project:
+Buka terminal baru di folder project, lalu jalankan:
 
 ```bash
 npm run dev
 ```
 
-Biarkan terminal ini tetap berjalan selama aplikasi digunakan.
+Biarkan terminal ini tetap berjalan agar CSS dan tampilan aplikasi dapat digunakan.
 
 ## Akses Aplikasi
 
-Setelah Laravel dan Vite berjalan, buka browser:
+Buka browser dan masuk ke:
 
 ```text
 http://127.0.0.1:8000
@@ -174,18 +142,19 @@ http://127.0.0.1:8000
 
 Aplikasi memiliki beberapa aturan:
 
-* Pendapatan bulanan minimal Rp1.000.000
-* Nominal maksimal pengajuan Rp200.000.000
-* Tenor maksimal 24 bulan
-* Maksimal 3 pengajuan untuk satu nama nasabah
-* Pengajuan dimulai dengan status Pending
-* Pengajuan Pending dapat disetujui atau ditolak
-* Pengajuan yang sudah disetujui dapat ditandai Lunas
-* Pengajuan Lunas tetap tersimpan tetapi tidak dihitung dalam total pengajuan Dashboard
+* Pendapatan minimal Rp1.000.000 per bulan.
+* Pengajuan maksimal Rp200.000.000.
+* Tenor maksimal 24 bulan.
+* Satu nasabah maksimal memiliki 3 pengajuan.
+* Pengajuan baru memiliki status **Pending**.
+* Pengajuan **Pending** dapat disetujui atau ditolak.
+* Pengajuan yang sudah disetujui dapat ditandai **Lunas**.
+* Pengajuan yang sudah **Lunas** tetap tersimpan di database.
+* Pengajuan **Lunas** tidak dihitung dalam total pengajuan di Dashboard.
 
 ## Perhitungan Cicilan
 
-Cicilan per bulan dihitung dengan rumus:
+Cicilan dihitung dengan rumus sederhana:
 
 ```text
 Nominal Pengajuan ÷ Tenor
@@ -198,9 +167,9 @@ Rp24.000.000 ÷ 24 bulan
 = Rp1.000.000 per bulan
 ```
 
-Perhitungan ini tidak menggunakan bunga karena tidak terdapat ketentuan bunga pada spesifikasi aplikasi.
+Aplikasi tidak menggunakan bunga karena tidak ada aturan bunga pada spesifikasi.
 
-## Struktur Utama
+## Struktur Project
 
 ```text
 app/
@@ -229,26 +198,20 @@ database/
 
 ## Catatan
 
-Jika terjadi perubahan database setelah migration, gunakan:
+Jika ada perubahan pada database, jalankan:
 
 ```bash
 php artisan migrate
 ```
 
-Jika tampilan CSS tidak muncul, pastikan Vite sedang berjalan:
+Jika CSS atau tampilan tidak muncul, pastikan Vite sudah berjalan:
 
 ```bash
 npm run dev
 ```
 
-Jika ingin menghentikan server, tekan:
+Untuk menghentikan Laravel atau Vite, tekan:
 
 ```text
 Ctrl + C
 ```
-# simpanpinjamsimple
-# simpanpinjamsimple_
-# simpanpinjamsimple_
-# simpanpinjamsimple_
-# simpanpinjamsimple_
-# simpanpinjamsimple_
